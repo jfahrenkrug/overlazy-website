@@ -1,0 +1,68 @@
+---
+import { locales, localeNames, type Locale } from '../i18n/locales';
+import { t } from '../i18n/ui';
+
+interface Props {
+  locale: Locale;
+  /** 'home' | 'imprint' — which page to stay on when switching languages. */
+  page: 'home' | 'imprint';
+}
+
+const { locale, page } = Astro.props;
+
+function hrefFor(target: Locale) {
+  return page === 'home' ? `/${target}/` : `/${target}/imprint/`;
+}
+---
+
+<div class="group relative">
+  <button
+    type="button"
+    class="peer flex items-center gap-1.5 rounded-full border-2 border-ink/15 bg-paper/80 px-3.5 py-1.5 font-body text-sm font-semibold text-ink shadow-[2px_2px_0_0_rgba(12,27,82,0.12)] transition hover:border-ink/30 focus-visible:border-ink/30"
+    aria-haspopup="listbox"
+    aria-expanded="false"
+    data-lang-toggle
+  >
+    <span aria-hidden="true">🌐</span>
+    <span>{localeNames[locale]}</span>
+  </button>
+  <ul
+    role="listbox"
+    aria-label={t(locale, 'footer.language')}
+    class="invisible absolute right-0 z-20 mt-2 w-44 origin-top-right scale-95 rounded-2xl border-2 border-ink/10 bg-paper p-1.5 opacity-0 shadow-lg transition duration-150 ease-out group-has-[[data-lang-toggle][aria-expanded='true']]:visible group-has-[[data-lang-toggle][aria-expanded='true']]:scale-100 group-has-[[data-lang-toggle][aria-expanded='true']]:opacity-100"
+    data-lang-menu
+  >
+    {
+      locales.map((code) => (
+        <li role="option" aria-selected={code === locale}>
+          <a
+            href={hrefFor(code)}
+            class:list={[
+              'block rounded-xl px-3 py-2 font-body text-sm transition hover:bg-kraft',
+              code === locale ? 'font-semibold text-flame-deep' : 'text-ink-soft',
+            ]}
+          >
+            {localeNames[code]}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</div>
+
+<script>
+  for (const toggle of document.querySelectorAll<HTMLButtonElement>('[data-lang-toggle]')) {
+    toggle.addEventListener('click', () => {
+      const expanded = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', String(!expanded));
+    });
+    document.addEventListener('click', (event) => {
+      if (!toggle.parentElement?.contains(event.target as Node)) {
+        toggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+    toggle.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') toggle.setAttribute('aria-expanded', 'false');
+    });
+  }
+</script>
