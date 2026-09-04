@@ -1,0 +1,64 @@
+---
+import '../styles/global.css';
+import { locales, type Locale } from '../i18n/locales';
+
+interface Props {
+  locale: Locale;
+  title: string;
+  description: string;
+  /** 'home' | 'imprint' — used to build correct hreflang alternate paths. */
+  page: 'home' | 'imprint';
+}
+
+const { locale, title, description, page } = Astro.props;
+
+function pathFor(target: Locale) {
+  return page === 'home' ? `/${target}/` : `/${target}/imprint/`;
+}
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Caveat:wght@600;700&family=Inter:wght@400;500;600;700&display=swap"
+    />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={new URL(pathFor(locale), Astro.site)} />
+    {
+      locales.map((code) => (
+        <link rel="alternate" hreflang={code} href={new URL(pathFor(code), Astro.site)} />
+      ))
+    }
+    <link rel="alternate" hreflang="x-default" href={new URL(pathFor('en'), Astro.site)} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL('/images/app-icon.png', Astro.site)} />
+    <meta name="twitter:card" content="summary" />
+
+    <link rel="icon" type="image/png" href="/images/app-icon.png" />
+    <link rel="apple-touch-icon" href="/images/app-icon.png" />
+    <meta name="theme-color" content="#fa5830" />
+  </head>
+  <body>
+    <slot />
+    <script is:inline define:vars={{ locale }}>
+      try {
+        window.localStorage.setItem('overlazy-locale', locale);
+      } catch (error) {
+        // Storage may be unavailable (private mode); language detection just
+        // falls back to navigator.language on the next visit.
+      }
+    </script>
+  </body>
+</html>

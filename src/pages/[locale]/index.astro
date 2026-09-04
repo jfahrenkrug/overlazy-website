@@ -1,0 +1,89 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import LanguagePicker from '../../components/LanguagePicker.astro';
+import PrintCard from '../../components/PrintCard.astro';
+import KraftTag from '../../components/KraftTag.astro';
+import { locales } from '../../i18n/locales';
+import { t } from '../../i18n/ui';
+
+export function getStaticPaths() {
+  return locales.map((locale) => ({ params: { locale } }));
+}
+
+const { locale } = Astro.params;
+---
+
+<BaseLayout
+  locale={locale}
+  page="home"
+  title={t(locale, 'meta.title')}
+  description={t(locale, 'meta.description')}
+>
+  <div class="linen relative min-h-svh overflow-hidden">
+    <header class="relative z-40 mx-auto flex max-w-6xl items-center justify-between px-5 py-6 sm:px-8">
+      <a href={`/${locale}/`} class="flex items-center gap-2.5">
+        <img src="/images/app-icon.png" alt="" width="36" height="36" class="rounded-[10px] shadow-sm" />
+        <span class="font-display text-xl font-extrabold tracking-tight text-ink">Overlazy</span>
+      </a>
+      <LanguagePicker locale={locale} page="home" />
+    </header>
+
+    <main>
+      <section class="relative mx-auto grid max-w-6xl items-center gap-14 px-5 pb-20 pt-6 sm:px-8 lg:grid-cols-[1.05fr_0.95fr] lg:gap-8 lg:pb-28">
+        <div class="relative z-10 max-w-xl">
+          <KraftTag text={t(locale, 'hero.tag')} class="mb-6" />
+          <h1 class="font-display text-[clamp(2.8rem,7vw,5.2rem)] font-extrabold leading-[0.95] tracking-tight text-ink">
+            {t(locale, 'hero.headline')}
+          </h1>
+          <p class="mt-6 max-w-md text-lg leading-relaxed text-ink-soft sm:text-xl">
+            {t(locale, 'hero.subhead')}
+          </p>
+          <p class="mt-8 inline-flex items-center gap-2 rounded-full bg-ink px-5 py-2.5 font-body text-sm font-semibold text-cream">
+            <svg viewBox="0 0 24 24" class="h-4 w-4 flex-shrink-0" aria-hidden="true">
+              <path
+                d="M12 0 L14.2 9.8 L24 12 L14.2 14.2 L12 24 L9.8 14.2 L0 12 L9.8 9.8 Z"
+                fill="#fa5830"
+              />
+            </svg>
+            {t(locale, 'cta.statement')}
+          </p>
+        </div>
+
+        <div class="relative z-10 flex justify-center py-6 lg:justify-end lg:py-0">
+          <PrintCard bandText={t(locale, 'hero.printBand')} />
+        </div>
+      </section>
+
+      <section class="relative z-10 border-t-2 border-ink/10 bg-paper/60">
+        <div class="mx-auto max-w-6xl px-5 py-16 sm:px-8">
+          <ol class="grid gap-10 sm:grid-cols-3">
+            <li>
+              <span class="font-hand text-3xl text-flame-deep">1</span>
+              <h2 class="mt-1 font-display text-2xl font-bold text-ink">{t(locale, 'steps.1.title')}</h2>
+              <p class="mt-2 text-ink-soft">{t(locale, 'steps.1.body')}</p>
+            </li>
+            <li>
+              <span class="font-hand text-3xl text-flame-deep">2</span>
+              <h2 class="mt-1 font-display text-2xl font-bold text-ink">{t(locale, 'steps.2.title')}</h2>
+              <p class="mt-2 text-ink-soft">{t(locale, 'steps.2.body')}</p>
+            </li>
+            <li>
+              <span class="font-hand text-3xl text-flame-deep">3</span>
+              <h2 class="mt-1 font-display text-2xl font-bold text-ink">{t(locale, 'steps.3.title')}</h2>
+              <p class="mt-2 text-ink-soft">{t(locale, 'steps.3.body')}</p>
+            </li>
+          </ol>
+        </div>
+      </section>
+    </main>
+
+    <footer class="relative z-10 mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-5 py-8 text-sm text-ink-soft sm:flex-row sm:px-8">
+      <p>{t(locale, 'footer.rights')}</p>
+      <div class="flex items-center gap-5">
+        <a href={`/${locale}/imprint/`} class="font-medium text-ink-soft underline decoration-ink-soft/30 underline-offset-4 hover:text-ink">
+          {t(locale, 'footer.imprint')}
+        </a>
+      </div>
+    </footer>
+  </div>
+</BaseLayout>

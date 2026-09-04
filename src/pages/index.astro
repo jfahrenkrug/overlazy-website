@@ -1,0 +1,49 @@
+---
+import { locales, defaultLocale } from '../i18n/locales';
+---
+
+<!doctype html>
+<html lang={defaultLocale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Overlazy</title>
+    <meta http-equiv="refresh" content={`0; url=/${defaultLocale}/`} />
+    <link rel="canonical" href={`/${defaultLocale}/`} />
+    <link rel="icon" type="image/png" href="/images/app-icon.png" />
+    <script is:inline define:vars={{ locales, defaultLocale }}>
+      try {
+        const stored = window.localStorage.getItem('overlazy-locale');
+        const candidates = stored ? [stored] : navigator.languages || [navigator.language];
+        let target = defaultLocale;
+
+        outer: for (const candidate of candidates) {
+          const lower = candidate.toLowerCase();
+          for (const locale of locales) {
+            if (locale.toLowerCase() === lower || lower.startsWith(locale.toLowerCase() + '-')) {
+              target = locale;
+              break outer;
+            }
+          }
+          const base = lower.split('-')[0];
+          for (const locale of locales) {
+            if (locale.toLowerCase().split('-')[0] === base) {
+              target = locale;
+              break outer;
+            }
+          }
+        }
+
+        window.location.replace(`/${target}/`);
+      } catch (error) {
+        window.location.replace(`/${defaultLocale}/`);
+      }
+    </script>
+  </head>
+  <body>
+    <p>
+      Overlazy is launching soon. If you are not redirected,
+      <a href={`/${defaultLocale}/`}>continue to the site</a>.
+    </p>
+  </body>
+</html>
