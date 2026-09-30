@@ -2,7 +2,7 @@
 // Source of truth: TinyHello/scripts/translations.json and
 // Overlazy/Resources/Localizable.xcstrings. Update astro.config.mjs's
 // `i18n.locales` alongside this file when the app's language set changes.
-export const locales = ['en', 'de', 'es', 'pt-BR'] as const;
+export const locales = ['en', 'de', 'es', 'pt-BR', 'fr', 'ja', 'ko'] as const;
 
 export type Locale = (typeof locales)[number];
 
@@ -13,6 +13,9 @@ export const localeNames: Record<Locale, string> = {
   de: 'Deutsch',
   es: 'Español',
   'pt-BR': 'Português (Brasil)',
+  fr: 'Français',
+  ja: '日本語',
+  ko: '한국어',
 };
 
 export function isLocale(value: string): value is Locale {

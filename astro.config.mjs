@@ -8,7 +8,7 @@ export default defineConfig({
   site: 'https://overlazy.app',
   i18n: {
     defaultLocale: 'en',
-    locales: ['en', 'de', 'es', 'pt-BR'],
+    locales: ['en', 'de', 'es', 'pt-BR', 'fr', 'ja', 'ko'],
     routing: {
       prefixDefaultLocale: true
     }

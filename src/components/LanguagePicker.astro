@@ -1,129 +1,27 @@
 ---
 import { locales, localeNames, type Locale } from '../i18n/locales';
 import { t } from '../i18n/ui';
-
-interface Props {
-  locale: Locale;
-  /** 'home' | 'imprint' — which page to stay on when switching languages. */
-  page: 'home' | 'imprint';
-}
-
+interface Props { locale: Locale; page: 'home' | 'imprint' | 'privacy-policy'; }
 const { locale, page } = Astro.props;
-
-function hrefFor(target: Locale) {
-  return page === 'home' ? `/${target}/` : `/${target}/imprint/`;
-}
+const hrefFor = (target: Locale) => page === 'home' ? `/${target}/` : `/${target}/${page}/`;
 ---
-
-<div class="group relative" data-lang-picker>
-  <button
-    type="button"
-    class="peer flex items-center gap-1.5 rounded-full border-2 border-ink/15 bg-paper/80 px-3.5 py-1.5 font-body text-sm font-semibold text-ink shadow-[2px_2px_0_0_rgba(12,27,82,0.12)] transition hover:border-ink/30 focus-visible:border-ink/30"
-    aria-haspopup="menu"
-    aria-expanded="false"
-    data-lang-toggle
-  >
-    <span aria-hidden="true">🌐</span>
-    <span>{localeNames[locale]}</span>
-  </button>
-  <ul
-    role="menu"
-    aria-label={t(locale, 'footer.language')}
-    class="invisible absolute right-0 z-20 mt-2 w-44 origin-top-right scale-95 rounded-2xl border-2 border-ink/10 bg-paper p-1.5 opacity-0 shadow-lg transition duration-150 ease-out group-has-[[data-lang-toggle][aria-expanded='true']]:visible group-has-[[data-lang-toggle][aria-expanded='true']]:scale-100 group-has-[[data-lang-toggle][aria-expanded='true']]:opacity-100"
-    data-lang-menu
-  >
-    {
-      locales.map((code) => (
-        <li role="none">
-          <a
-            href={hrefFor(code)}
-            role="menuitem"
-            tabindex="-1"
-            aria-current={code === locale ? 'true' : undefined}
-            data-lang-item
-            class:list={[
-              'block rounded-xl px-3 py-2 font-body text-sm transition hover:bg-kraft',
-              code === locale ? 'font-semibold text-flame-deep' : 'text-ink-soft',
-            ]}
-          >
-            {localeNames[code]}
-          </a>
-        </li>
-      ))
-    }
-  </ul>
-</div>
-
+<details class="language-picker">
+  <summary aria-label={`${t(locale, 'footer.language')}: ${localeNames[locale]}`}>{localeNames[locale]}</summary>
+  <nav aria-label={t(locale, 'footer.language')}>
+    {locales.map((code) => <a href={hrefFor(code)} lang={code} aria-current={code === locale ? 'true' : undefined}>{localeNames[code]}</a>)}
+  </nav>
+</details>
 <script>
-  for (const picker of document.querySelectorAll<HTMLElement>('[data-lang-picker]')) {
-    const toggle = picker.querySelector<HTMLButtonElement>('[data-lang-toggle]');
-    const menu = picker.querySelector<HTMLUListElement>('[data-lang-menu]');
-    const items = Array.from(picker.querySelectorAll<HTMLAnchorElement>('[data-lang-item]'));
-    if (!toggle || !menu || items.length === 0) continue;
-
-    function isOpen() {
-      return toggle?.getAttribute('aria-expanded') === 'true';
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape') return;
+    for (const picker of document.querySelectorAll<HTMLDetailsElement>('.language-picker[open]')) {
+      picker.open = false;
+      picker.querySelector('summary')?.focus();
     }
-
-    function open(focusIndex: number | null) {
-      toggle?.setAttribute('aria-expanded', 'true');
-      if (focusIndex !== null) items[focusIndex]?.focus();
+  });
+  document.addEventListener('click', (event) => {
+    for (const picker of document.querySelectorAll<HTMLDetailsElement>('.language-picker[open]')) {
+      if (!picker.contains(event.target as Node)) picker.open = false;
     }
-
-    function close(returnFocus: boolean) {
-      toggle?.setAttribute('aria-expanded', 'false');
-      if (returnFocus) toggle?.focus();
-    }
-
-    toggle.addEventListener('click', () => {
-      if (isOpen()) {
-        close(false);
-      } else {
-        const currentIndex = items.findIndex((item) => item.getAttribute('aria-current') === 'true');
-        open(currentIndex >= 0 ? currentIndex : 0);
-      }
-    });
-
-    toggle.addEventListener('keydown', (event) => {
-      if (event.key === 'ArrowDown' || event.key === 'ArrowUp' || event.key === 'Enter' || event.key === ' ') {
-        event.preventDefault();
-        const currentIndex = items.findIndex((item) => item.getAttribute('aria-current') === 'true');
-        open(currentIndex >= 0 ? currentIndex : 0);
-      }
-    });
-
-    menu.addEventListener('keydown', (event) => {
-      const currentIndex = items.indexOf(document.activeElement as HTMLAnchorElement);
-
-      switch (event.key) {
-        case 'ArrowDown':
-          event.preventDefault();
-          items[(currentIndex + 1) % items.length]?.focus();
-          break;
-        case 'ArrowUp':
-          event.preventDefault();
-          items[(currentIndex - 1 + items.length) % items.length]?.focus();
-          break;
-        case 'Home':
-          event.preventDefault();
-          items[0]?.focus();
-          break;
-        case 'End':
-          event.preventDefault();
-          items[items.length - 1]?.focus();
-          break;
-        case 'Escape':
-          event.preventDefault();
-          close(true);
-          break;
-        case 'Tab':
-          close(false);
-          break;
-      }
-    });
-
-    document.addEventListener('click', (event) => {
-      if (isOpen() && !picker.contains(event.target as Node)) close(false);
-    });
-  }
+  });
 </script>

@@ -1,239 +1,224 @@
 ---
 name: Overlazy website
-description: A small printed photo sticker, just peeled and handed over — the launch teaser for Overlazy.
+description: A minimal Overlazy wordmark on a solid orange ground.
 colors:
-  ink: "#0c1b52"
-  ink-soft: "#34406f"
-  kraft: "#efe2cd"
-  kraft-dark: "#dfcda8"
-  cream: "#fcebd9"
   flame: "#fa5830"
-  flame-deep: "#e8471f"
-  paper: "#fff8ec"
+  ink: "#0c1b52"
 typography:
   display:
-    fontFamily: "Baloo 2, ui-rounded, SF Pro Rounded, system-ui, sans-serif"
+    fontFamily: "Baloo 2, ui-rounded, system-ui, sans-serif"
+    fontSize: "clamp(3.5rem, 13vw, 6rem)"
     fontWeight: 800
-    lineHeight: 0.95
-    letterSpacing: "-0.01em"
-  hand:
-    fontFamily: "Caveat, cursive"
+    lineHeight: 1.1
+    letterSpacing: "-0.025em"
+  brand:
+    fontFamily: "Baloo 2, ui-rounded, system-ui, sans-serif"
+    fontSize: "1.75rem"
+    fontWeight: 800
+  headline:
+    fontFamily: "ui-sans-serif, system-ui, sans-serif"
+    fontSize: "clamp(2rem, 6vw, 3rem)"
     fontWeight: 700
+    lineHeight: 1.2
+  title:
+    fontFamily: "ui-sans-serif, system-ui, sans-serif"
+    fontSize: "1.2rem"
+    fontWeight: 700
+    lineHeight: 1.4
   body:
-    fontFamily: "Inter, ui-sans-serif, system-ui, sans-serif"
-    fontWeight: 400
-    lineHeight: 1.6
-rounded:
-  tag: "0px (clipped to a tag silhouette, not rounded)"
-  card: "0px (square-cut print edges)"
-  panel: "24px"
-  pill: "999px"
+    fontFamily: "ui-sans-serif, system-ui, sans-serif"
+    fontSize: "1rem"
+    lineHeight: 1.7
+  label:
+    fontFamily: "ui-sans-serif, system-ui, sans-serif"
+    fontSize: "0.875rem"
 spacing:
-  sm: "0.5rem"
-  md: "1rem"
-  lg: "1.5rem"
-  xl: "2.5rem"
+  panel: "0.5rem"
+  paragraph: "1rem"
+  gutter: "1.5rem"
+  section: "2.5rem"
 components:
-  cta-pill:
-    backgroundColor: "{colors.ink}"
-    textColor: "{colors.cream}"
-    rounded: "{rounded.pill}"
-    padding: "0.65rem 1.25rem"
-  kraft-tag:
-    backgroundColor: "{colors.kraft-dark}"
+  wordmark:
     textColor: "{colors.ink}"
-    typography: "{typography.hand}"
+    typography: "{typography.display}"
+    padding: "3rem 1.5rem"
+  footer:
+    textColor: "{colors.ink}"
+    typography: "{typography.label}"
+    padding: "1.25rem 1.5rem"
+  language-panel:
+    backgroundColor: "{colors.flame}"
+    textColor: "{colors.ink}"
+    padding: "{spacing.panel}"
+  language-link:
+    textColor: "{colors.ink}"
+    padding: "0.5rem 0.75rem"
 ---
 
 # Design System: Overlazy website
 
 ## Overview
 
-**Creative North Star: "The print, not the mockup"**
+**Creative North Star: "Overlazy on orange"**
 
-The site's one idea: never show a phone. Overlazy's promise is a physical
-object — a small 2×3″ sticker photo, peeled off its backing and handed to
-someone at a party, seconds after it printed. The website proves that by
-being the object: the first thing a visitor sees is a print card, tilted on
-a warm kraft tabletop, pinned by a strip of washi tape, one corner already
-peeled up off its adhesive backing. There is no phone frame, no app-store
-screenshot grid, no gradient-blob SaaS hero anywhere on the page. Confirmed
-visual rejection, from the user directly: the print must never read as a
-Polaroid — no white plastic frame, ever. It is a Sprocket sticker: square-cut
-edges, portrait 2:3, adhesive backing visible where it peels.
+The user pinned a plain identity: the name Overlazy on an uninterrupted
+orange ground. Rounded, heavy brand lettering provides the personality;
+space and a two-color palette provide the composition. Legal reading and
+language selection use quiet system typography on the same ground.
 
-The world is built from real evidence, not invented mood: every color in
-the palette is sampled from `public/images/app-icon.png`, and the headline
-("Shoot. Done.") and its supporting line are the app's own onboarding copy,
-captured live from a Simulator build (see `public/images/app-screenshot.png`
-and the surface brief at `.impeccable/surfaces/src-pages-index-astro.md`).
+This replaces the rejected tactile teaser. Its paper props, print
+illustration, texture, launch statement, and decorative motion are no
+longer part of the visual system. The current implementation in
+`src/styles/global.css` and the shared components is the source of truth.
 
 **Key Characteristics:**
-- Warm, tactile, handmade — kraft paper, washi tape, a handwriting face for
-  small labels — never a slick tech-product register.
-- One committed accent (the icon's orange-red) carries a third to a half of
-  the surface; it is not a sprinkle.
-- Exactly one washi strip, one print, deliberate empty kraft space. The
-  world stays restrained on purpose so it never tips into craft-store
-  clutter.
-- No kicker/eyebrow labels above headings anywhere; headings carry their
-  own weight.
+
+- Solid flame background with ink text throughout.
+- Self-hosted brand lettering; system fonts for navigation and legal copy.
+- Sparse, flat composition with small functional footer navigation.
+- No imagery, textures, cards, shadows, or animated effects in page content.
 
 ## Colors
 
-Committed strategy: the flame orange-red is not an accent chip, it is the
-print's own band, the primary CTA, and the sparkle mark — the same role it
-plays inside the real app icon.
+The palette pairs a saturated orange-red ground with a deep navy foreground.
+The frontmatter defines both normative values; the names match the source
+CSS tokens.
 
 ### Primary
-- **Flame** (`#fa5830`): the app icon's own orange-red. Used at page scale —
-  the print card's overlay band background is drawn from it as a gradient
-  scene, the sparkle glyph, and the step numerals.
-- **Flame Deep** (`#e8471f`): the darker mountain tone from the icon's own
-  artwork; used for hover/active states on links and for the printed step
-  numerals' resting color.
+
+- **Flame:** fills the page and the language panel. It remains a solid field
+  rather than a gradient, texture, or small accent.
 
 ### Neutral
-- **Kraft** (`#efe2cd`): the page ground — a warm tabletop color, never
-  white. Carries a very faint dot texture (`radial-gradient` at 14px) to
-  read as linen/paper rather than a flat fill.
-- **Kraft Dark** (`#dfcda8`): the kraft tag's fill — one step darker than
-  the page ground so the tag reads as a separate physical object sitting on
-  the table.
-- **Paper** (`#fff8ec`): card backgrounds (the imprint panel, the print's
-  own base) — a warmer white than pure `#fff`, matching the icon's printer
-  body.
-- **Ink** (`#0c1b52`): body text, the print's overlay band, and the primary
-  CTA pill background — the icon's own navy, sampled directly from its
-  printed-photo band.
-- **Ink Soft** (`#34406f`): secondary copy (subheads, step descriptions,
-  footer text) — ink tinted toward the page's warm hue rather than gray, so
-  secondary text never goes cold.
-- **Cream** (`#fcebd9`): text set on ink/flame surfaces (the CTA pill label,
-  the band headline, the sparkle fill on dark ground).
 
-### Named Rules
-**The No White Rule.** Nothing on this page is pure `#ffffff` or pure
-`#000000`. Every neutral, light or dark, is tinted from the icon's own warm
-palette.
+- **Ink:** carries the wordmark, reading text, links, language-panel border,
+  and focus outline. Selected text reverses the pair: ink background with
+  flame lettering.
+
+**The Solid Ground Rule.** Keep the same uninterrupted flame ground on the
+home, legal notice, and privacy policy pages.
 
 ## Typography
 
-**Display Font:** Baloo 2 (with ui-rounded, SF Pro Rounded, system-ui fallback)
-**Hand Font:** Caveat (cursive fallback)
-**Body Font:** Inter (with ui-sans-serif, system-ui fallback)
+**Display Font:** Baloo 2, with ui-rounded, system-ui, and sans-serif fallbacks.
+The licensed font is served locally from `public/fonts/baloo-2-bold.ttf`,
+declared at weight 800 with `font-display: swap`.
 
-**Character:** Baloo 2 is rounded and friendly — it echoes the app's own
-in-app type (a bold rounded sans, confirmed from the captured "Shoot. Done."
-onboarding screenshot) — reserved for headlines and numerals people are
-meant to notice first. Caveat is genuine handwriting, used only where the
-world's own logic calls for a hand-label: a kraft tag, a step numeral.
-Inter is the workhorse for anything meant to be read at length or scanned
-quickly (subheads, body copy, legal text); it is never used as a display
-voice.
+**Body Font:** ui-sans-serif, system-ui, sans-serif. There is no additional
+body-font download or handwriting face.
+
+**Character:** The rounded brand face makes the name warm and recognizable.
+System lettering gives legal text and controls a familiar, readable voice.
 
 ### Hierarchy
-- **Display** (800, `clamp(2.8rem, 7vw, 5.2rem)`, line-height 0.95): the hero
-  headline only, always the app's own real copy line for that locale.
-- **Title** (700, 1.5rem, line-height 1.2, Baloo 2): the three step
-  headings ("Shoot" / "Print" / "Hand it over").
-- **Hand label** (700, 1.15rem–1.9rem, Caveat): the kraft tag text and the
-  three step numerals — the only places handwriting appears.
-- **Body** (400–600, 1rem–1.25rem, line-height 1.6, Inter): subhead, step
-  descriptions, footer, legal copy. Kept short of the 65–75ch measure
-  everywhere it appears at this page's narrow column widths.
+
+- **Display:** the home wordmark, using the frontmatter's fluid display role.
+- **Brand:** the smaller Overlazy home link above legal content.
+- **Headline:** legal page headings, with balanced text wrapping.
+- **Title:** legal section headings.
+- **Body:** legal paragraphs in a column capped at 76ch, with long strings
+  allowed to wrap anywhere.
+- **Label:** footer links and the language selector. The active language is
+  bold (700) and underlined.
+
+**The Brand Type Rule.** Reserve Baloo 2 for the Overlazy name; use system
+type for legal headings, body copy, and controls.
 
 ## Layout
 
-Single-column content stacked inside a `max-w-6xl` (teaser) / `max-w-3xl`
-(imprint) centered container. The hero is a two-column grid at `lg` and
-wider (copy left, print card right); it collapses to one column, print card
-centered, below that. Section rhythm: generous vertical space above each
-heading, tighter space below it, consistent with the craft floor's spacing
-rule. The page never scrolls horizontally at any width; the print card
-itself is fluid (`clamp(200px, 24vw, 280px)` wide, fixed 2:3 aspect ratio)
-rather than a fixed-pixel object that would overflow narrow viewports.
+The home page is a vertical flex layout with a minimum height of one small
+viewport (`100svh`). Its main region fills the space above the footer and
+centers the single wordmark in both axes. The main region has generous
+vertical padding (3rem) and the shared horizontal gutter.
+
+Legal pages use one centered reading column, capped at 76ch with the shared
+horizontal gutter. Their brand header has vertical padding (2rem); the
+reading region has top padding (1.5rem) and bottom padding (3rem). Sections
+are separated by the section spacing token, consecutive paragraphs by the
+paragraph token. The back link follows the same section spacing.
+
+The footer wraps as needed, with a small row gap (.25rem) and the shared
+gutter between items. It is centered on home and aligned to the reading
+column on legal pages, where its horizontal padding is removed.
+
+At widths up to 480px, the footer becomes the language panel's positioning
+anchor. The panel sits one rem from its right edge, so wrapping footer
+items do not cause the list to clip off-screen.
 
 ## Elevation & Depth
 
-Soft, warm, offset shadows only — no flat cards, no borders standing in for
-elevation. The print card carries a colored drop-shadow (`14px 22px 26px`,
-navy at 28% opacity) so it reads as physically resting on the table, not
-pasted flat onto it. The peeled corner and washi tape each carry their own
-small offset shadow so the illusion of layered paper survives at any zoom
-level.
-
-### Shadow Vocabulary
-- **card-rest** (`filter: drop-shadow(14px 22px 26px rgba(12,27,82,.28))`):
-  the print card's resting shadow on the kraft ground.
-- **peel-lift** (`box-shadow: -6px -6px 10px rgba(12,27,82,.18)`): the
-  peeled corner's shadow onto the card beneath it.
-- **panel** (`shadow: 6px 6px 0 rgba(12,27,82,.06)`): the imprint page's
-  content panel — a flatter, hard-edged offset (not a blur) because that
-  panel is a legal document, not a physical prop; it borrows the world's
-  color without borrowing the print's soft materiality.
+The system has no shadows, gradients, or material effects. The open language
+list sits above content through positioning and a z-index (2), distinguished
+by a thin ink border rather than a raised surface or alternate fill.
+There are no transitions or entrance animations.
 
 ## Shapes
 
-Two silhouette languages, used deliberately for different objects. Physical
-props (the print, the kraft tag, the washi tape) are cut with irregular or
-angular `clip-path` edges — a tag's notch, tape's torn zigzag, the print's
-own peeled-corner cut — because they are meant to read as paper objects, not
-UI chrome. UI chrome itself (the CTA pill, the language picker, the imprint
-panel) uses conventional soft geometry: full pill radii for small controls,
-24px panel radii for containers. The print's own corners are square, not
-rounded — the one deliberate exception that keeps it from ever reading as a
-Polaroid.
+Page content and the language list are flat and square. There are no pills,
+rounded panels, clipped paper silhouettes, or decorative containers. The
+language summary uses a small CSS chevron made from two borders; its native
+details marker is hidden.
 
 ## Components
 
-### CTA statement
-A pill-shaped ink-background chip carrying the sparkle glyph and the launch
-statement ("Overlazy is launching soon on the App Store."). Not a clickable
-button — it makes no promise the site cannot keep, since there is nothing
-to link to yet.
+### Wordmark
 
-### Kraft tag
-The "Launching soon" label: a notched kraft-dark tag with a hand-drawn
-string and hole-punch circle above it (inline SVG), set in Caveat, rotated
--3°. Stands in for the banned kicker/eyebrow pattern — it is a physical
-prop, not a typographic label riding above the heading.
+The only home-page main content is an `h1` reading “Overlazy,” centered in
+its available region and styled with the display role. It has no supporting
+copy, illustration, or launch claim.
 
-### Print card
-The signature component. Structure: an SVG sky/sun/mountain scene (matching
-the icon's own geometry) over an ink-colored overlay band carrying the
-sparkle glyph and a short band headline; a washi-tape strip pinning the
-top-left corner (torn zigzag `clip-path`, semi-transparent cream); a peeled
-triangular corner bottom-right (striped "release liner" texture) lifting
-off the card. Entrance motion: the card settles into place (rotate + fade +
-scale, 0.9s), the tape presses down after it, then the corner peels up last
-— one authored sequence, not scattered hover effects, and it no-ops under
-`prefers-reduced-motion`.
+### Legal reading column
+
+A smaller brand link leads back home, followed by a clear page heading,
+section headings, paragraphs, and a back link. Body links are always
+underlined. Impressum and privacy policy share the same visual treatment;
+the stable `/privacy-policy/` route renders the complete English policy.
+
+### Footer navigation
+
+Privacy policy, legal notice, and the language summary use small ink text
+on the page ground. Links underline on hover. Footer links and the language
+summary have a minimum interaction height (44px); this preserves an easy
+target without increasing their visual prominence.
 
 ### Language picker
-A pill button (globe glyph + current language name) that expands a listbox
-of the other locales on click; current locale marked in flame-deep.
-Full-radius controls, ink/15%-opacity border, matches the CTA pill's
-control language.
+
+A native `details` and `summary` control works without JavaScript. Its
+language list opens upward, separated from the summary by half a rem, with
+a minimum width (12rem), thin ink border (1px), and the panel padding token.
+Each language link has a minimum height (44px); the current locale is bold
+and underlined.
+
+Language links preserve home, Impressum, or privacy policy page type across
+all seven locales. JavaScript adds outside-click dismissal and Escape
+handling; Escape returns focus to the summary. The locale preference is
+stored when available for the root redirect.
+
+### Focus and text selection
+
+Keyboard focus uses a visible ink outline (2px) with an offset (4px).
+Links use a text underline offset (.2em). Text selection reverses the two
+brand colors. These states do not introduce extra colors or motion.
 
 ## Do's and Don'ts
 
 ### Do:
-- **Do** keep every raster/vector "photo" on the page geometric and
-  synthetic-labeled by construction (the SVG sun/mountain scene mirrors the
-  app icon) — never present a mockup as a real customer photo.
-- **Do** reuse the app's own real copy verbatim for the headline in every
-  locale (e.g. "Shoot. Done." / "Klick. Fertig.") rather than paraphrasing
-  it away.
-- **Do** keep the print's edges square and its corner peel adhesive-backed;
-  that is the one non-negotiable visual fact distinguishing it from a
-  Polaroid.
+
+- **Do** preserve the solid flame ground and ink foreground on every page.
+- **Do** keep the name centered and let empty space carry the home composition.
+- **Do** use the self-hosted Baloo 2 face for the name and system type for reading.
+- **Do** preserve visible keyboard focus, 44px control heights, and wrapping
+  footer navigation.
+- **Do** keep language switching native and preserve the visitor's page type.
+- **Do** maintain the same plain reading treatment for every legal locale.
 
 ### Don't:
-- **Don't** add a kicker/eyebrow label above any heading — use a physical
-  prop (the kraft tag) instead.
-- **Don't** show a phone frame, app-store screenshot grid, or gradient-blob
-  hero anywhere on this surface.
-- **Don't** state a price, a fixed launch date, or any capability the app
-  does not have; the CTA is a statement, not a form, until there is
-  somewhere real for it to go.
+
+- **Don't** restore the rejected tactile world, paper props, cards, textures,
+  illustrations, or decorative motion.
+- **Don't** add promotional sections, supporting home copy, or launch claims
+  to the pinned minimal page.
+- **Don't** introduce additional palette colors, downloaded body fonts,
+  shadows, or rounded control chrome.
+- **Don't** anchor the mobile language list to a wrapping summary in a way
+  that lets it extend beyond the viewport.

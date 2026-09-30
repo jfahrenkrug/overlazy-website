@@ -64,7 +64,7 @@ an ugly result. Users are never put in the position of "designer."
 - Pricing/availability model: paid or freemium — undecided which for the
   teaser, so the website must not state a specific price or claim "free."
   It can say the app is launching on the App Store.
-- Localized into English, German, Spanish, and Brazilian Portuguese (from
+- Localized into English, German, Spanish, Brazilian Portuguese, French, Japanese, and Korean (from
   `TinyHello/scripts/translations.json` / `Localizable.xcstrings`). The
   website's supported languages must always mirror this list; when the app
   adds or drops a language, the website's locales must follow.
@@ -128,3 +128,13 @@ an ugly result. Users are never put in the position of "designer."
 No product-specific requirement beyond ordinary WCAG AA web practice
 (contrast, keyboard operability, respecting reduced-motion) — treat as
 standard baseline, not a special constraint.
+
+## Current website scope
+
+The user rejected the original tactile teaser on 30 September 2026. The
+launch site must show only “Overlazy” on a solid orange background, with
+quiet privacy/legal links and a language picker. The policy is based on
+the current app implementation: no tracking or analytics, local photo and
+overlay processing, and optional user-initiated support/beta feedback.
+The stable App Store policy URL is `/privacy-policy/`. Do not reintroduce
+marketing sections, illustrations, textures, or launch claims.
