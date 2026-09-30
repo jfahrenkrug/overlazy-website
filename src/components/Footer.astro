@@ -1,0 +1,12 @@
+---
+import LanguagePicker from './LanguagePicker.astro';
+import { type Locale } from '../i18n/locales';
+import { t } from '../i18n/ui';
+interface Props { locale: Locale; page: 'home' | 'imprint' | 'privacy-policy'; }
+const { locale, page } = Astro.props;
+---
+<footer class="site-footer">
+  <a href={`/${locale}/privacy-policy/`}>{t(locale, 'footer.privacy')}</a>
+  <a href={`/${locale}/imprint/`}>{t(locale, 'footer.imprint')}</a>
+  <LanguagePicker locale={locale} page={page} />
+</footer>
