@@ -16,7 +16,7 @@ const { locale } = Astro.props;
       {privacy[locale].map(([heading, body], index) => <section>
         <h2>{heading}</h2><p>{body}</p>
         {index === 2 && <p><a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">GitHub — Privacy Statement</a></p>}
-        {index === 3 && <p><a href="mailto:johannes@springenwerk.com">johannes@springenwerk.com</a></p>}
+        {index === 3 && <p><a href="mailto:support@overlazy.app">support@overlazy.app</a></p>}
       </section>)}
       <a class="back-link" href={`/${locale}/`}>{t(locale, 'imprint.back')}</a>
     </main>
